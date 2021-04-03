@@ -5,14 +5,20 @@ library(tidyverse)
 library(ggrepel)
 library(sqldf)
 
+#import data set nya mana ? ga usa pake code, langsung aja dile import dataset-> as excel
+
 raw_data=Dataset
-cols <- names(raw_data)
+
+cols <- names(raw_data) # ambil judul judul nya sajaa,
 predictor <- grep("^(X|Y)", cols, value = TRUE)
 rsquare <- sapply(predictor, function(pred) {
   a <- lm(raw_data$MM~raw_data[[pred]], na.action="na.omit") 
   summary(a)$r.squared
-})
-Result5 <- data.frame(cols = predictor, rsquare = rsquare)
+}) #lm(dependent variable), var indepwndentnya MM, yang bergerak adalah prediktor, di atas di buat otomate sendiri, dimana yang depannya X dan Y. kalau ada missing value perlu proses pre processing
+
+#diatas summery hanya diambil r nya ajaah 
+
+Result5 <- data.frame(cols = predictor, rsquare = rsquare) #data frame dari hasil yg ada 
 
 atributes <- grep("^(X|Y)", cols, value = TRUE)
 Dataset<-raw_data[,atributes]
